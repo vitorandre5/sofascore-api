@@ -54,6 +54,11 @@ NODE_ENV=production
 CORS_ORIGIN=*
 API_PREFIX=/api
 REQUEST_TIMEOUT=10000
+SOFASCORE_FALLBACK_BASE_URLS=
+UPSTREAM_RETRIES=3
+UPSTREAM_RETRY_BACKOFF_MS=300
+TOP_MATCHES_LIMIT=50
+PRELOAD_INTERVAL_MS=30000
 USER_SUPABASE=
 PASSWD_SUPABASE=
 ```
@@ -61,6 +66,7 @@ PASSWD_SUPABASE=
 Notas:
 
 - `CORS_ORIGIN` aceita `*` ou lista separada por virgula.
+- `SOFASCORE_FALLBACK_BASE_URLS` aceita lista separada por virgula de hosts alternativos.
 - `USER_SUPABASE` e `PASSWD_SUPABASE` sao opcionais e ficam reservadas para futuras features de cache/log/persistencia.
 
 ## Como rodar localmente
@@ -90,6 +96,7 @@ npm start
 
 - `GET /health`
 - `GET /api/matches/live`
+- `GET /api/matches/top`
 - `GET /api/matches/:id`
 - `GET /api/team/:id`
 - `GET /api/player/:id`
@@ -129,6 +136,7 @@ Erro:
 ```bash
 curl http://localhost:8080/health
 curl http://localhost:8080/api/matches/live
+curl "http://localhost:8080/api/matches/top?limit=50"
 curl http://localhost:8080/api/matches/12437781
 curl http://localhost:8080/api/team/2817
 curl http://localhost:8080/api/player/839956
@@ -173,7 +181,15 @@ Rate limit atual: `300 req/min` por IP.
 
 ## Integracao com Sua Aplicacao
 
-Para integrar esta API na sua aplicacao, consulte o guia completo:
+### Opcao 1: Instalacao Automatica (Recomendada)
+
+Cole o prompt no GitHub Copilot e deixe ele integrar automaticamente:
+
+**[COPILOT_INSTALL.md](COPILOT_INSTALL.md)** - Prompt pronto para Copilot
+
+### Opcao 2: Instalacao Manual
+
+Para integrar manualmente, consulte o guia completo:
 
 **[INTEGRATION_GUIDE.md](INTEGRATION_GUIDE.md)**
 

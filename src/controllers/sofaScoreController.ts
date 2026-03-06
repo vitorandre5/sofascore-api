@@ -18,6 +18,21 @@ export const getLiveMatches = async (req: Request, res: Response): Promise<Respo
   return sendSuccess(res, data);
 };
 
+export const getTopMatches = async (req: Request, res: Response): Promise<Response> => {
+  const sport = typeof req.query.sport === "string" ? req.query.sport : "football";
+  const limitParam = typeof req.query.limit === "string" ? Number(req.query.limit) : undefined;
+  const refresh = req.query.refresh === "true";
+  const limit = Number.isFinite(limitParam) && (limitParam as number) > 0 ? Number(limitParam) : undefined;
+
+  const data = await sofaScoreService.getTopMatches({
+    sport,
+    limit,
+    refresh,
+  });
+
+  return sendSuccess(res, data);
+};
+
 export const getMatchById = async (req: Request, res: Response): Promise<Response> => {
   const data = await sofaScoreService.getMatchById(readId(req));
   return sendSuccess(res, data);
